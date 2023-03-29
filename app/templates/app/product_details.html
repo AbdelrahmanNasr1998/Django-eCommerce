@@ -1,0 +1,81 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row text-center ">
+        {% for pro in product %}
+        <div id="carouselExample{{pro.id}}" class="carousel slide">
+            <div class="carousel-inner">
+                {% for im in pro.images %}
+                <a href="{% url 'Product_Details' category pro.id %}">
+                    {% if forloop.first %}
+
+                    <div class="carousel-item active">
+                        <img src="{{ im.image }}" style="max-width: 100%; max-height: 500px">
+                    </div>
+                    {% else %}
+                    <div class="carousel-item">
+                        <img src="{{ im.image }}" style="max-width: 100%; max-height: 500px">
+                    </div>
+                    {% endif %}
+                </a>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample{{pro.id}}"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample{{pro.id}}"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    <hr>
+    <div class="row" dir="rtl">
+        <h2>{{ pro.name }}</h2>
+        <h2>{{ pro.price }}
+            جنيه
+            -
+            متبقي
+            {{ pro.items }}
+            قطعة
+        </h2>
+        <div>
+            {% if request.user.is_authenticated %}
+            {% if favorite %}
+
+            <a href="{% url 'Delete_Favorite' favorite.id %}" class="btn btn-danger">
+                Delete Favorite
+            </a>
+
+            {% else %}
+            <a href="{% url 'Add_Favorite' pro.id %}" class="btn btn-dark">
+                Favorite
+            </a>
+            {% endif %}
+            {% endif %}
+
+            <form id="items_form" method="post" class="mt-2">
+                {% csrf_token %}
+                <div style="position: relative;display: flex;flex-wrap: wrap;align-items: stretch;width: 250px">
+                    <select class="form-select" aria-label="Default select example" name="items" id="items"
+                            style="width: 100px">
+                        {% for item in range %}
+                        <option value="{{item}}">{{item}}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn btn-dark" type="submit">
+                        Add to Cart
+                    </button>
+                </div>
+            </form>
+
+        </div>
+        <h5>{{ pro.description }}</h5>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

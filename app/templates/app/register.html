@@ -1,0 +1,40 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container text-center mt-5 mb-5">
+    <h2>Register</h2>
+    <div class="mt-5">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-outline mb-2">
+                <input class="form-control" type="text" name="username" maxlength="150" autofocus required
+                       id="id_username" placeholder="Username">
+            </div>
+            <div class="form-outline mb-2">
+                <input class="form-control" type="email" name="email" required id="id_email" placeholder="E-Mail">
+            </div>
+            <div class="form-outline mb-2">
+                <input class="form-control" type="password" name="password1" autocomplete="new-password" required
+                       id="id_password1" placeholder="Password">
+            </div>
+            <div class="form-outline mb-2">
+                <input class="form-control" type="password" name="password2" autocomplete="new-password" required
+                       id="id_password2" placeholder="Confirmation Password">
+            </div>
+            <div class="text-center mb-5 pb-1">
+                <button class="btn btn-dark" type="submit" id="register">
+                    Register
+                </button>
+                {% if messages %}
+                {% for msg in messages %}
+                <div class="mt-2"
+                     style="background-color: #ff0000; color: #fff; padding: 5px">
+                    <i class="fa-solid fa-bug"></i> {{msg}}
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

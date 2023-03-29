@@ -1,0 +1,19 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container text-center mt-5 mb-5">
+    <h2>Store Categories</h2>
+    <div class="row">
+        {% for cat in cats %}
+
+        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mt-5">
+            <a href="{% url 'Products' cat.name %}">
+                <img src="{{ cat.image.url }}" width="400px" height="200px">
+                <div>{{ cat.name }}</div>
+            </a>
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
